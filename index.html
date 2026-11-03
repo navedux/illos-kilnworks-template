@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnworks: background jobs, queues and cron for app teams</title>
+<meta name="description" content="Queues, cron, email and file processing for your app. Write a function, push it, and Kilnworks runs it with retries, schedules and a log of every attempt.">
+<meta name="theme-color" content="#f5f6f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/mona-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/geist-mono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top" id="top">
+  <div class="wrap bar">
+    <a class="brand" href="#main" aria-label="Kilnworks home">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8"/><path class="arch" d="M10.5 23.5v-7.5a5.5 5.5 0 0 1 11 0v7.5"/><path class="base" d="M7.5 23.5h17"/></svg>
+      Kilnworks
+    </a>
+    <nav class="nav" id="menu" aria-label="Main">
+      <a href="#product">Product</a>
+      <a href="#how">How it works</a>
+      <a href="#reliability">Reliability</a>
+      <a href="#customers">Customers</a>
+      <a href="#pricing">Pricing</a>
+      <a class="nav__signin" href="#start">Sign in</a>
+    </nav>
+    <div class="bar__end">
+      <a class="bar__signin" href="#start">Sign in</a>
+      <a class="btn btn--primary btn--sm" href="#start">Start free</a>
+      <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+        <svg class="i i--open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5L20 5"/><path d="M4 12L20 12"/><path d="M4 19L20 19"/></svg>
+        <svg class="i i--close" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6L6.00081 17.9992M17.9992 18L6 6.00085"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Hero -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero__copy">
+      <h1 id="hero-title">Background jobs you never have to babysit</h1>
+      <p class="lead">Queues, cron, email and file processing for your app. Write a function, push it, and Kilnworks runs it with retries, schedules and a log of every attempt.</p>
+      <div class="actions">
+        <a class="btn btn--primary" href="#start">Start free</a>
+        <a class="btn btn--quiet" href="#how">See how it works</a>
+      </div>
+    </div>
+    <div class="hero__stage">
+      <div class="well well--mint hero__well">
+        <div class="illo illo--hero" data-illos><!-- illos:queue --></div>
+      </div>
+      <figure class="runs">
+        <figcaption class="runs__title">Recent runs</figcaption>
+        <ul>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z"/><path d="M8 12.5L10.5 15L16 9"/></svg><code>send-receipt</code><span>Done in 182 ms</span></li>
+          <li class="is-live"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3V6"/><path d="M12 18V21"/><path d="M21 12L18 12"/><path d="M6 12L3 12"/><path d="M18.3635 5.63672L16.2422 7.75804"/><path d="M7.75804 16.2422L5.63672 18.3635"/><path d="M18.3635 18.3635L16.2422 16.2422"/><path d="M7.75804 7.75804L5.63672 5.63672"/></svg><code>resize-avatar</code><span>Running</span></li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.3884 3L17.3913 3.97574C17.8393 4.41165 18.0633 4.62961 17.9844 4.81481C17.9056 5 17.5888 5 16.9552 5H9.19422C5.22096 5 2 8.13401 2 12C2 13.4872 2.47668 14.8662 3.2895 16"/><path d="M7.61156 21L6.60875 20.0243C6.16074 19.5883 5.93673 19.3704 6.01557 19.1852C6.09441 19 6.4112 19 7.04478 19H14.8058C18.779 19 22 15.866 22 12C22 10.5128 21.5233 9.13383 20.7105 8"/></svg><code>sync-invoices</code><span>Retry 2 of 5</span></li>
+        </ul>
+      </figure>
+    </div>
+    <dl class="figures">
+      <div><dt>Median wait before a job starts</dt><dd>38 ms</dd></div>
+      <div><dt>Jobs run for customers last month</dt><dd>4.2 billion</dd></div>
+      <div><dt>Uptime over the past twelve months</dt><dd>99.99%</dd></div>
+    </dl>
+  </section>
+
+  <!-- Product tabs -->
+  <section class="section wrap" id="product" aria-labelledby="product-title">
+    <div class="head">
+      <h2 id="product-title">Everything your app does after the response</h2>
+      <p class="lead">Five kinds of background work on the same workers, with the same retries, logs and bill.</p>
+    </div>
+    <div class="product">
+      <div class="tabs-col">
+      <div class="tabs" role="tablist" aria-label="Products" aria-orientation="vertical">
+        <button class="tab" role="tab" id="tab-queues" aria-controls="panel-queues" aria-selected="true" type="button">
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.64298 3.14559L6.93816 3.93362C4.31272 5.14719 3 5.75397 3 6.75C3 7.74603 4.31272 8.35281 6.93817 9.56638L8.64298 10.3544C10.2952 11.1181 11.1214 11.5 12 11.5C12.8786 11.5 13.7048 11.1181 15.357 10.3544L17.0618 9.56638C19.6873 8.35281 21 7.74603 21 6.75C21 5.75397 19.6873 5.14719 17.0618 3.93362L15.357 3.14559C13.7048 2.38186 12.8786 2 12 2C11.1214 2 10.2952 2.38186 8.64298 3.14559Z"/><path d="M20.788 11.0972C20.9293 11.2959 21 11.5031 21 11.7309C21 12.7127 19.6873 13.3109 17.0618 14.5072L15.357 15.284C13.7048 16.0368 12.8786 16.4133 12 16.4133C11.1214 16.4133 10.2952 16.0368 8.64298 15.284L6.93817 14.5072C4.31272 13.3109 3 12.7127 3 11.7309C3 11.5031 3.07067 11.2959 3.212 11.0972"/><path d="M20.3767 16.2661C20.7922 16.5971 21 16.927 21 17.3176C21 18.2995 19.6873 18.8976 17.0618 20.0939L15.357 20.8707C13.7048 21.6236 12.8786 22 12 22C11.1214 22 10.2952 21.6236 8.64298 20.8707L6.93817 20.0939C4.31272 18.8976 3 18.2995 3 17.3176C3 16.927 3.20778 16.5971 3.62334 16.2661"/></svg>
+          <span class="tab__name">Queues</span>
+          <span class="tab__note">Jobs that wait their turn</span>
+        </button>
+        <button class="tab" role="tab" id="tab-cron" aria-controls="panel-cron" aria-selected="false" type="button" tabindex="-1">
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8V12L14 14"/></svg>
+          <span class="tab__name">Cron</span>
+          <span class="tab__note">Schedules in plain words</span>
+        </button>
+        <button class="tab" role="tab" id="tab-email" aria-controls="panel-email" aria-selected="false" type="button" tabindex="-1">
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 6L8.91302 9.91697C11.4616 11.361 12.5384 11.361 15.087 9.91697L22 6"/><path d="M2.01577 13.4756C2.08114 16.5412 2.11383 18.0739 3.24496 19.2094C4.37608 20.3448 5.95033 20.3843 9.09883 20.4634C11.0393 20.5122 12.9607 20.5122 14.9012 20.4634C18.0497 20.3843 19.6239 20.3448 20.7551 19.2094C21.8862 18.0739 21.9189 16.5412 21.9842 13.4756C22.0053 12.4899 22.0053 11.5101 21.9842 10.5244C21.9189 7.45886 21.8862 5.92609 20.7551 4.79066C19.6239 3.65523 18.0497 3.61568 14.9012 3.53657C12.9607 3.48781 11.0393 3.48781 9.09882 3.53656C5.95033 3.61566 4.37608 3.65521 3.24495 4.79065C2.11382 5.92608 2.08114 7.45885 2.01576 10.5244C1.99474 11.5101 1.99475 12.4899 2.01577 13.4756Z"/></svg>
+          <span class="tab__name">Email</span>
+          <span class="tab__note">Sends you can trace</span>
+        </button>
+        <button class="tab" role="tab" id="tab-uploads" aria-controls="panel-uploads" aria-selected="false" type="button" tabindex="-1">
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.4776 9.01106C17.485 9.01102 17.4925 9.01101 17.5 9.01101C19.9853 9.01101 22 11.0294 22 13.5193C22 15.8398 20.25 17.7508 18 18M17.4776 9.01106C17.4924 8.84606 17.5 8.67896 17.5 8.51009C17.5 5.46695 15.0376 3 12 3C9.12324 3 6.76233 5.21267 6.52042 8.03192M17.4776 9.01106C17.3753 10.1476 16.9286 11.1846 16.2428 12.0165M6.52042 8.03192C3.98398 8.27373 2 10.4139 2 13.0183C2 15.4417 3.71776 17.4632 6 17.9273M6.52042 8.03192C6.67826 8.01687 6.83823 8.00917 7 8.00917C8.12582 8.00917 9.16474 8.38194 10.0005 9.01101"/><path d="M12 13L12 21M12 13C11.2998 13 9.99153 14.9943 9.5 15.5M12 13C12.7002 13 14.0085 14.9943 14.5 15.5"/></svg>
+          <span class="tab__name">Uploads</span>
+          <span class="tab__note">Files handled after upload</span>
+        </button>
+        <button class="tab" role="tab" id="tab-notifications" aria-controls="panel-notifications" aria-selected="false" type="button" tabindex="-1">
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 18C15.5 19.933 13.933 21.5 12 21.5C10.067 21.5 8.5 19.933 8.5 18"/><path d="M19.2311 18H4.76887C3.79195 18 3 17.208 3 16.2311C3 15.762 3.18636 15.3121 3.51809 14.9803L4.12132 14.3771C4.68393 13.8145 5 13.0514 5 12.2558V9.5C5 5.63401 8.13401 2.5 12 2.5C15.866 2.5 19 5.634 19 9.5V12.2558C19 13.0514 19.3161 13.8145 19.8787 14.3771L20.4819 14.9803C20.8136 15.3121 21 15.762 21 16.2311C21 17.208 20.208 18 19.2311 18Z"/></svg>
+          <span class="tab__name">Notifications</span>
+          <span class="tab__note">Push, in-app and SMS</span>
+        </button>
+      </div>
+      <div class="install">
+        <p>One SDK for all five</p>
+        <div class="code code--line">
+          <pre id="code-install"><code><span class="c">$</span> npm i kilnworks</code></pre>
+          <button class="copy" type="button" data-copy="code-install" data-text="npm i kilnworks" aria-label="Copy command">
+              <svg class="i i--copy" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 14.5C7.5 11.2002 7.5 9.55025 8.52513 8.52513C9.55025 7.5 11.2002 7.5 14.5 7.5C17.7998 7.5 19.4497 7.5 20.4749 8.52513C21.5 9.55025 21.5 11.2002 21.5 14.5C21.5 17.7998 21.5 19.4497 20.4749 20.4749C19.4497 21.5 17.7998 21.5 14.5 21.5C11.2002 21.5 9.55025 21.5 8.52513 20.4749C7.5 19.4497 7.5 17.7998 7.5 14.5Z"/><path d="M7.5 16.5C6.10355 16.5 5.40533 16.5 4.84402 16.3036C3.83866 15.9518 3.0482 15.1613 2.69641 14.156C2.5 13.5947 2.5 12.8964 2.5 11.5V9.5C2.5 6.20017 2.5 4.55025 3.52513 3.52513C4.55025 2.5 6.20017 2.5 9.5 2.5H11.5C12.8964 2.5 13.5947 2.5 14.156 2.69641C15.1613 3.0482 15.9518 3.83866 16.3036 4.84402C16.5 5.40533 16.5 6.10355 16.5 7.5"/></svg>
+              <svg class="i i--done" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>
+          </button>
+        </div>
+      </div>
+      </div>
+
+      <div class="panels">
+        <div class="panel well well--meadow" role="tabpanel" id="panel-queues" aria-labelledby="tab-queues" tabindex="0">
+          <div class="panel__copy">
+            <h3>Queues that keep every job until it’s done</h3>
+            <p>Each job is written to a replicated table before your request returns, so a deploy or a crash never drops one. Set how many run at once, per queue or per customer.</p>
+            <a class="more" href="#how">Ship your first queue<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18"/></svg></a>
+          </div>
+          <div class="illo" data-illos><!-- illos:database --></div>
+        </div>
+        <div class="panel well well--meadow" role="tabpanel" id="panel-cron" aria-labelledby="tab-cron" tabindex="0" hidden>
+          <div class="panel__copy">
+            <h3>Schedules you can read, pause and replay</h3>
+            <p>Write a schedule in cron or in words like “every weekday at 9”. See the next ten runs before you ship, and replay a missed one from the dashboard.</p>
+            <a class="more" href="#how">Ship your first schedule<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18"/></svg></a>
+          </div>
+          <div class="illo" data-illos><!-- illos:cron --></div>
+        </div>
+        <div class="panel well well--meadow" role="tabpanel" id="panel-email" aria-labelledby="tab-email" tabindex="0" hidden>
+          <div class="panel__copy">
+            <h3>Email that leaves after the request, not during it</h3>
+            <p>Receipts, digests and password resets go out through the same queue. Bounces retry on their own, and every message has a delivered status you can look up.</p>
+            <a class="more" href="#how">Send your first email<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18"/></svg></a>
+          </div>
+          <div class="illo" data-illos><!-- illos:email --></div>
+        </div>
+        <div class="panel well well--meadow" role="tabpanel" id="panel-uploads" aria-labelledby="tab-uploads" tabindex="0" hidden>
+          <div class="panel__copy">
+            <h3>Uploads processed while your user moves on</h3>
+            <p>Files land in storage first. Resizing, virus scans and video encoding run as jobs, and the result is ready when your app asks for it.</p>
+            <a class="more" href="#how">Process your first upload<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18"/></svg></a>
+          </div>
+          <div class="illo" data-illos><!-- illos:uploads --></div>
+        </div>
+        <div class="panel well well--meadow" role="tabpanel" id="panel-notifications" aria-labelledby="tab-notifications" tabindex="0" hidden>
+          <div class="panel__copy">
+            <h3>One call reaches every device a user turned on</h3>
+            <p>Send one event and Kilnworks fans it out to push, in-app and SMS. It respects quiet hours and shows which device got the message.</p>
+            <a class="more" href="#how">Send your first notification<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18"/></svg></a>
+          </div>
+          <div class="illo" data-illos><!-- illos:notifications --></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Three steps -->
+  <section class="section wrap" id="how" aria-labelledby="how-title">
+    <div class="head">
+      <h2 id="how-title">Ship a job in three steps</h2>
+      <p class="lead">A job is a function in your repo. There are no workers to run and no servers to patch.</p>
+    </div>
+    <ol class="steps">
+      <li class="step" style="--i: 0">
+        <div class="step__copy">
+          <p class="step__num" aria-hidden="true">01</p>
+          <h3>Write the job</h3>
+          <p>Give a function a name and say how many times it may retry. It lives next to the code that calls it.</p>
+          <ul class="checks">
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>TypeScript, Python or Go</li>
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>Runs on your laptop too</li>
+          </ul>
+          <div class="code">
+            <div class="code__bar"><span>jobs/send-receipt.ts</span>
+            <button class="copy" type="button" data-copy="code-write" aria-label="Copy code">
+              <svg class="i i--copy" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 14.5C7.5 11.2002 7.5 9.55025 8.52513 8.52513C9.55025 7.5 11.2002 7.5 14.5 7.5C17.7998 7.5 19.4497 7.5 20.4749 8.52513C21.5 9.55025 21.5 11.2002 21.5 14.5C21.5 17.7998 21.5 19.4497 20.4749 20.4749C19.4497 21.5 17.7998 21.5 14.5 21.5C11.2002 21.5 9.55025 21.5 8.52513 20.4749C7.5 19.4497 7.5 17.7998 7.5 14.5Z"/><path d="M7.5 16.5C6.10355 16.5 5.40533 16.5 4.84402 16.3036C3.83866 15.9518 3.0482 15.1613 2.69641 14.156C2.5 13.5947 2.5 12.8964 2.5 11.5V9.5C2.5 6.20017 2.5 4.55025 3.52513 3.52513C4.55025 2.5 6.20017 2.5 9.5 2.5H11.5C12.8964 2.5 13.5947 2.5 14.156 2.69641C15.1613 3.0482 15.9518 3.83866 16.3036 4.84402C16.5 5.40533 16.5 6.10355 16.5 7.5"/></svg>
+              <svg class="i i--done" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>
+            </button>
+            </div>
+<pre id="code-write"><code><span class="k">import</span> { job } <span class="k">from</span> <span class="s">"kilnworks"</span>;
+
+<span class="k">export const</span> sendReceipt = job({
+  id: <span class="s">"send-receipt"</span>,
+  retries: <span class="n">5</span>,
+  run: <span class="k">async</span> ({ orderId }) =&gt; {
+    <span class="k">await</span> mail.receipt(orderId);
+  },
+});</code></pre>
+          </div>
+        </div>
+        <div class="step__well well well--mint">
+          <div class="illo" data-illos><!-- illos:version-control --></div>
+        </div>
+      </li>
+      <li class="step" style="--i: 1">
+        <div class="step__copy">
+          <p class="step__num" aria-hidden="true">02</p>
+          <h3>Push it</h3>
+          <p>Every push to main builds your jobs, tests them and rolls them out. Runs already in flight finish on the old version.</p>
+          <ul class="checks">
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>A preview queue per branch</li>
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>Roll back in one click</li>
+          </ul>
+          <div class="code">
+            <div class="code__bar"><span>Terminal</span>
+            <button class="copy" type="button" data-copy="code-push" data-text="git push origin main" aria-label="Copy command">
+              <svg class="i i--copy" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 14.5C7.5 11.2002 7.5 9.55025 8.52513 8.52513C9.55025 7.5 11.2002 7.5 14.5 7.5C17.7998 7.5 19.4497 7.5 20.4749 8.52513C21.5 9.55025 21.5 11.2002 21.5 14.5C21.5 17.7998 21.5 19.4497 20.4749 20.4749C19.4497 21.5 17.7998 21.5 14.5 21.5C11.2002 21.5 9.55025 21.5 8.52513 20.4749C7.5 19.4497 7.5 17.7998 7.5 14.5Z"/><path d="M7.5 16.5C6.10355 16.5 5.40533 16.5 4.84402 16.3036C3.83866 15.9518 3.0482 15.1613 2.69641 14.156C2.5 13.5947 2.5 12.8964 2.5 11.5V9.5C2.5 6.20017 2.5 4.55025 3.52513 3.52513C4.55025 2.5 6.20017 2.5 9.5 2.5H11.5C12.8964 2.5 13.5947 2.5 14.156 2.69641C15.1613 3.0482 15.9518 3.83866 16.3036 4.84402C16.5 5.40533 16.5 6.10355 16.5 7.5"/></svg>
+              <svg class="i i--done" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>
+            </button>
+            </div>
+<pre id="code-push"><code><span class="c">$</span> git push origin main
+<span class="c">build</span>   3 jobs found
+<span class="c">test</span>    12 passed in 4.1s
+<span class="c">ship</span>    <span class="s">live in 9s</span></code></pre>
+          </div>
+        </div>
+        <div class="step__well well well--meadow">
+          <div class="illo" data-illos><!-- illos:ci-pipeline --></div>
+        </div>
+      </li>
+      <li class="step" style="--i: 2">
+        <div class="step__copy">
+          <p class="step__num" aria-hidden="true">03</p>
+          <h3>Call it from your app</h3>
+          <p>Enqueue from any route and return right away. The job runs on Kilnworks workers, which grow and shrink with your queue.</p>
+          <ul class="checks">
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>Delay or schedule any call</li>
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>Track each run by its id</li>
+          </ul>
+          <div class="code">
+            <div class="code__bar"><span>app/checkout.ts</span>
+            <button class="copy" type="button" data-copy="code-call" aria-label="Copy code">
+              <svg class="i i--copy" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 14.5C7.5 11.2002 7.5 9.55025 8.52513 8.52513C9.55025 7.5 11.2002 7.5 14.5 7.5C17.7998 7.5 19.4497 7.5 20.4749 8.52513C21.5 9.55025 21.5 11.2002 21.5 14.5C21.5 17.7998 21.5 19.4497 20.4749 20.4749C19.4497 21.5 17.7998 21.5 14.5 21.5C11.2002 21.5 9.55025 21.5 8.52513 20.4749C7.5 19.4497 7.5 17.7998 7.5 14.5Z"/><path d="M7.5 16.5C6.10355 16.5 5.40533 16.5 4.84402 16.3036C3.83866 15.9518 3.0482 15.1613 2.69641 14.156C2.5 13.5947 2.5 12.8964 2.5 11.5V9.5C2.5 6.20017 2.5 4.55025 3.52513 3.52513C4.55025 2.5 6.20017 2.5 9.5 2.5H11.5C12.8964 2.5 13.5947 2.5 14.156 2.69641C15.1613 3.0482 15.9518 3.83866 16.3036 4.84402C16.5 5.40533 16.5 6.10355 16.5 7.5"/></svg>
+              <svg class="i i--done" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>
+            </button>
+            </div>
+<pre id="code-call"><code><span class="k">await</span> sendReceipt.enqueue({
+  orderId: order.id,
+});
+<span class="c">// returns in about 4 ms</span></code></pre>
+          </div>
+        </div>
+        <div class="step__well well well--mint">
+          <div class="illo" data-illos><!-- illos:containers --></div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Reliability -->
+  <section class="section wrap reliability" id="reliability" aria-labelledby="rel-title">
+    <div class="reliability__head">
+      <h2 id="rel-title">Built for the day something breaks</h2>
+      <p class="lead">Payment APIs go down and deploys go wrong. Kilnworks keeps the work safe until it can finish.</p>
+    </div>
+    <ul class="rel">
+      <li>
+        <h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.3884 3L17.3913 3.97574C17.8393 4.41165 18.0633 4.62961 17.9844 4.81481C17.9056 5 17.5888 5 16.9552 5H9.19422C5.22096 5 2 8.13401 2 12C2 13.4872 2.47668 14.8662 3.2895 16"/><path d="M7.61156 21L6.60875 20.0243C6.16074 19.5883 5.93673 19.3704 6.01557 19.1852C6.09441 19 6.4112 19 7.04478 19H14.8058C18.779 19 22 15.866 22 12C22 10.5128 21.5233 9.13383 20.7105 8"/></svg>Retries that back off</h3>
+        <p>A failed job tries again later, and later still, up to 25 times.</p>
+      </li>
+      <li>
+        <h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"/><path d="M21.5 13.5H16.5743C15.7322 13.5 15.0706 14.2036 14.6995 14.9472C14.2963 15.7551 13.4889 16.5 12 16.5C10.5111 16.5 9.70373 15.7551 9.30054 14.9472C8.92942 14.2036 8.26777 13.5 7.42566 13.5H2.5"/></svg>A queue for jobs that gave up</h3>
+        <p>Nothing is thrown away. Fix the bug, then replay them in one click.</p>
+      </li>
+      <li>
+        <h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14.5C18.8137 14.5 21.5 11.8137 21.5 8.5C21.5 5.18629 18.8137 2.5 15.5 2.5C12.1863 2.5 9.5 5.18629 9.5 8.5C9.5 9.38041 9.68962 10.2165 10.0303 10.9697L2.5 18.5V21.5H5.5V19.5H7.5V17.5H9.5L13.0303 13.9697C13.7835 14.3104 14.6196 14.5 15.5 14.5Z"/><path d="M17.5 6.5L16.5 7.5"/></svg>Run-once keys</h3>
+        <p>Enqueue the same key twice and the job still runs once.</p>
+      </li>
+      <li>
+        <h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 13L17 9M14 15C14 16.1046 13.1046 17 12 17C10.8954 17 10 16.1046 10 15C10 13.8954 10.8954 13 12 13C13.1046 13 14 13.8954 14 15Z"/><path d="M6 12C6 8.68629 8.68629 6 12 6C13.0929 6 14.1175 6.29218 15 6.80269"/><path d="M2.50006 12.0001C2.50006 7.52172 2.50006 5.28255 3.8913 3.8913C5.28255 2.50006 7.52172 2.50006 12.0001 2.50006C16.4784 2.50006 18.7176 2.50006 20.1088 3.8913C21.5001 5.28255 21.5001 7.52172 21.5001 12.0001C21.5001 16.4784 21.5001 18.7176 20.1088 20.1088C18.7176 21.5001 16.4784 21.5001 12.0001 21.5001C7.52172 21.5001 5.28255 21.5001 3.8913 20.1088C2.50006 18.7176 2.50006 16.4784 2.50006 12.0001Z"/></svg>Rate limits</h3>
+        <p>Stay under a fussy partner API’s limit, per second or per minute.</p>
+      </li>
+      <li>
+        <h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 4H5C4.06812 4 3.60218 4 3.23463 4.15224C2.74458 4.35523 2.35523 4.74458 2.15224 5.23463C2 5.60218 2 6.06812 2 7C2 7.93188 2 8.39782 2.15224 8.76537C2.35523 9.25542 2.74458 9.64477 3.23463 9.84776C3.60218 10 4.06812 10 5 10H19C19.9319 10 20.3978 10 20.7654 9.84776C21.2554 9.64477 21.6448 9.25542 21.8478 8.76537C22 8.39782 22 7.93188 22 7C22 6.06812 22 5.60218 21.8478 5.23463C21.6448 4.74458 21.2554 4.35523 20.7654 4.15224C20.3978 4 19.9319 4 19 4Z"/><path d="M19 14H5C4.06812 14 3.60218 14 3.23463 14.1522C2.74458 14.3552 2.35523 14.7446 2.15224 15.2346C2 15.6022 2 16.0681 2 17C2 17.9319 2 18.3978 2.15224 18.7654C2.35523 19.2554 2.74458 19.6448 3.23463 19.8478C3.60218 20 4.06812 20 5 20H19C19.9319 20 20.3978 20 20.7654 19.8478C21.2554 19.6448 21.6448 19.2554 21.8478 18.7654C22 18.3978 22 17.9319 22 17C22 16.0681 22 15.6022 21.8478 15.2346C21.6448 14.7446 21.2554 14.3552 20.7654 14.1522C20.3978 14 19.9319 14 19 14Z"/><path d="M6.125 7H6M6.25 7C6.25 7.13807 6.13807 7.25 6 7.25C5.86193 7.25 5.75 7.13807 5.75 7C5.75 6.86193 5.86193 6.75 6 6.75C6.13807 6.75 6.25 6.86193 6.25 7Z"/><path d="M10.125 7H10M10.25 7C10.25 7.13807 10.1381 7.25 10 7.25C9.86193 7.25 9.75 7.13807 9.75 7C9.75 6.86193 9.86193 6.75 10 6.75C10.1381 6.75 10.25 6.86193 10.25 7Z"/><path d="M6.125 17H6M6.25 17C6.25 17.1381 6.13807 17.25 6 17.25C5.86193 17.25 5.75 17.1381 5.75 17C5.75 16.8619 5.86193 16.75 6 16.75C6.13807 16.75 6.25 16.8619 6.25 17Z"/><path d="M10.125 17H10M10.25 17C10.25 17.1381 10.1381 17.25 10 17.25C9.86193 17.25 9.75 17.1381 9.75 17C9.75 16.8619 9.86193 16.75 10 16.75C10.1381 16.75 10.25 16.8619 10.25 17Z"/></svg>Fair share for every customer</h3>
+        <p>Cap how many jobs one account runs at once, so a big export never starves the rest.</p>
+      </li>
+      <li>
+        <h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 16.5L15 18M14 14.5C14 15.8807 12.8807 17 11.5 17C10.1193 17 9 15.8807 9 14.5C9 13.1193 10.1193 12 11.5 12C12.8807 12 14 13.1193 14 14.5Z"/><path d="M13 2.5V3C13 5.82843 13 7.24264 13.8787 8.12132C14.7574 9 16.1716 9 19 9H19.5M20 10.6569V14C20 17.7712 20 19.6569 18.8284 20.8284C17.6569 22 15.7712 22 12 22C8.22876 22 6.34315 22 5.17157 20.8284C4 19.6569 4 17.7712 4 14V9.45584C4 6.21082 4 4.58831 4.88607 3.48933C5.06508 3.26731 5.26731 3.06508 5.48933 2.88607C6.58831 2 8.21082 2 11.4558 2C12.1614 2 12.5141 2 12.8372 2.11401C12.9044 2.13772 12.9702 2.165 13.0345 2.19575C13.3436 2.34355 13.593 2.593 14.0919 3.09188L18.8284 7.82843C19.4065 8.40649 19.6955 8.69552 19.8478 9.06306C20 9.4306 20 9.83935 20 10.6569Z"/></svg>A log of every attempt</h3>
+        <p>Input, output, errors and timing for each try, searchable for 30 days.</p>
+      </li>
+      <li>
+        <h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.9248 21H10.0752C5.44476 21 3.12955 21 2.27636 19.4939C1.42317 17.9879 2.60736 15.9914 4.97574 11.9985L6.90057 8.75333C9.17559 4.91778 10.3131 3 12 3C13.6869 3 14.8244 4.91777 17.0994 8.75332L19.0243 11.9985C21.3926 15.9914 22.5768 17.9879 21.7236 19.4939C20.8704 21 18.5552 21 13.9248 21Z"/><path d="M12 17V13"/><path d="M12 9.25H12.125M12.25 9.25C12.25 9.11193 12.1381 9 12 9C11.8619 9 11.75 9.11193 11.75 9.25C11.75 9.38807 11.8619 9.5 12 9.5C12.1381 9.5 12.25 9.38807 12.25 9.25Z"/></svg>Alerts before customers notice</h3>
+        <p>Hear about it in chat or email when a queue backs up or a job keeps failing.</p>
+      </li>
+      <li>
+        <h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12C8 18 12 22 12 22C12 22 16 18 16 12C16 6 12 2 12 2C12 2 8 6 8 12Z"/><path d="M21 15H3"/><path d="M21 9H3"/></svg>Your data stays in your region</h3>
+        <p>Run and store jobs in the US or the EU, and keep payloads encrypted at rest.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Quotes -->
+  <section class="section wrap" id="customers" aria-labelledby="quotes-title">
+    <div class="head">
+      <h2 id="quotes-title">From teams who moved their jobs over</h2>
+    </div>
+    <div class="wall">
+      <div class="wall__col">
+        <figure class="quote quote--lead">
+          <blockquote><p>We had three cron servers and a page of notes on which one ran what. Now every schedule lives in the repo, and the dashboard tells us what ran at 4 a.m. without anyone logging in to a box.</p></blockquote>
+          <figcaption><span class="who">Marisol Okafor</span><span class="role">Platform lead, Ostrander Freight</span></figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote><p>Receipts used to add a second to checkout. Moving them into a job took one afternoon.</p></blockquote>
+          <figcaption><span class="who">Hana Lindqvist</span><span class="role">Engineer, Saltmarsh Bikes</span></figcaption>
+        </figure>
+      </div>
+      <div class="wall__col">
+        <figure class="quote">
+          <blockquote><p>Our payment provider was down for an hour. Nine thousand jobs waited, then went through on their own. Nobody had to touch anything.</p></blockquote>
+          <figcaption><span class="who">Devin Achterberg</span><span class="role">CTO, Pelloway</span></figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote><p>The fair-share cap means one big account can’t hold up everyone else’s exports any more.</p></blockquote>
+          <figcaption><span class="who">Aisha Benyamin</span><span class="role">Staff engineer, Tamberly</span></figcaption>
+        </figure>
+      </div>
+      <div class="wall__col">
+        <figure class="quote">
+          <blockquote><p>Replaying the failed jobs after a bad deploy is my favourite button in any tool we pay for.</p></blockquote>
+          <figcaption><span class="who">Tomás Ferreira</span><span class="role">Backend engineer, Cobblefield</span></figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote><p>We moved forty queues in a week. The import kept every schedule and every retry setting, so the cutover was a non-event.</p></blockquote>
+          <figcaption><span class="who">Jonah Whitcombe</span><span class="role">Engineering manager, Wrenhaven Health</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section wrap" id="pricing" aria-labelledby="pricing-title">
+    <div class="head">
+      <h2 id="pricing-title">Pay for the jobs you run</h2>
+      <p class="lead">Start free. Move up when your app gets busy, and down again if it gets quiet.</p>
+    </div>
+    <div class="plans">
+      <article class="plan" aria-labelledby="plan-hobby">
+        <h3 id="plan-hobby">Hobby</h3>
+        <p class="plan__price"><span class="amount">$0</span></p>
+        <p class="plan__for">For side projects and trying it out.</p>
+        <a class="btn btn--quiet" href="#start">Start free</a>
+        <ul class="ticks">
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>50,000 runs a month</li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>3 queues and 5 schedules</li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>Logs kept for 7 days</li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>Help from the community</li>
+        </ul>
+      </article>
+      <article class="plan plan--pick" aria-labelledby="plan-team">
+        <h3 id="plan-team">Team</h3>
+        <p class="plan__price"><span class="amount">$39</span><span class="per">a month</span></p>
+        <p class="plan__for">For apps with real users and a team behind them.</p>
+        <a class="btn btn--primary" href="#start">Start a 14-day trial</a>
+        <ul class="ticks">
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>2 million runs a month</li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>Unlimited queues and schedules</li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>Email, uploads and notifications</li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>Logs kept for 30 days</li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>Alerts in chat and email</li>
+        </ul>
+      </article>
+      <article class="plan" aria-labelledby="plan-scale">
+        <h3 id="plan-scale">Scale</h3>
+        <p class="plan__price"><span class="amount">$249</span><span class="per">a month</span></p>
+        <p class="plan__for">For busy apps and more than one team.</p>
+        <a class="btn btn--quiet" href="#start">Talk to us</a>
+        <ul class="ticks">
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>25 million runs a month</li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>Fair share per customer</li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>Logs kept for 90 days</li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>Single sign-on and audit log</li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14L8.5 17.5L19 6.5"/></svg>An engineer replies within an hour</li>
+        </ul>
+      </article>
+    </div>
+    <p class="plans__note">Every plan has retries, cron and the failed-jobs queue. Extra runs cost $0.30 per 100,000.</p>
+  </section>
+
+  <!-- Closing band -->
+  <section class="wrap closing" id="start" aria-labelledby="start-title">
+    <div class="well well--mint closing__well">
+      <div class="closing__copy">
+        <h2 id="start-title">Move your first job over this afternoon</h2>
+        <p class="lead">Import the queues and schedules you run today in one command, then switch the old worker off when you’re ready.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="#pricing">Start free</a>
+          <a class="btn btn--quiet" href="#how">Read the guide</a>
+        </div>
+      </div>
+      <div class="illo" data-illos><!-- illos:kilnworks-migration --></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div class="foot__brand">
+      <a class="brand" href="#main" aria-label="Kilnworks home">
+        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8"/><path class="arch" d="M10.5 23.5v-7.5a5.5 5.5 0 0 1 11 0v7.5"/><path class="base" d="M7.5 23.5h17"/></svg>
+        Kilnworks
+      </a>
+      <p>Background jobs, queues, cron and email for app teams.</p>
+    </div>
+    <nav class="foot__col" aria-label="Product">
+      <h2>Product</h2>
+      <a href="#product">Queues</a>
+      <a href="#product">Cron</a>
+      <a href="#product">Email</a>
+      <a href="#product">Uploads</a>
+      <a href="#product">Notifications</a>
+    </nav>
+    <nav class="foot__col" aria-label="Developers">
+      <h2>Developers</h2>
+      <a href="#how">Quick start</a>
+      <a href="#how">SDK</a>
+      <a href="#reliability">Retries and limits</a>
+      <a href="#start">Import a queue</a>
+    </nav>
+    <nav class="foot__col" aria-label="Company">
+      <h2>Company</h2>
+      <a href="#customers">Customers</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#reliability">Security</a>
+      <a href="#start">Contact</a>
+    </nav>
+  </div>
+  <div class="wrap foot__legal" id="legal">
+    <span>&copy; 2026 Kilnworks</span>
+    <a class="illos-credit" href="https://illos.dev/?utm_source=kilnworks-template&amp;utm_medium=example" rel="noopener"><svg viewBox="-26.8 0 400 400" aria-hidden="true"><path fill-rule="evenodd" d="M0,253.81 L0,100 L173.21,0 L346.41,100 L346.41,300 L173.21,400 L76.6,344.23 L76.6,204 L116.6,227.09 L116.6,321.13 L173.21,353.81 L306.41,276.91 L306.41,123.09 L173.21,46.19 L40,123.09 L40,276.91 Z M76.6,140 L116.6,163.09 L116.6,203.09 L76.6,180 Z"/></svg>Animated assets by Illos</a>
+    <span class="foot__links"><a href="#legal">Privacy</a><a href="#legal">Terms</a></span>
+  </div>
+</footer>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

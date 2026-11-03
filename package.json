@@ -1,0 +1,16 @@
+{
+  "name": "kilnworks-landing",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A landing page template illustrated with animated Isometric assets by Illos.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}
